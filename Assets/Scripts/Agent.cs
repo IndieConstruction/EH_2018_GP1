@@ -9,6 +9,10 @@ public class Agent : MonoBehaviour {
     /// </summary>
     public string Name;
     public int Life;
+    /// <summary>
+    /// Salva il valore iniziale della vita.
+    /// </summary>
+    protected int initialLife;
     public bool IsAlive = true;
     /// <summary>
     /// Velocità di movimento (maggiore è il valore, maggiore sarà la velocità di spostamento)
@@ -22,19 +26,41 @@ public class Agent : MonoBehaviour {
     /// Identifica se il personaggio sta attualmenmte saltando (se true sta saltando).
     /// </summary>
     public bool IsJumping = false;
+
+    public float RespawnDelay = 1;
+
+    protected Vector3 respawnPosition;
+
     public Rigidbody rigidbody = null;
+
+    private void Awake() {
+        initialLife = Life;
+        respawnPosition = transform.position;
+    }
 
     /// <summary>
     /// Toglie una unità di salute a questo oggetto.
     /// </summary>
-    public void Damage()
+    public void Damage(int damageAmount)
     {
         Debug.Log("Ho subito un danno " + Name);
-        Life = Life - 1;
-        if (Life == 0)
+        Life = Life - damageAmount;
+        
+        if (Life <= 0)
         {
             IsAlive = false;
+            if (gameObject.GetComponent<MeshRenderer>() != null) {
+                gameObject.GetComponent<MeshRenderer>().enabled = false;
+            }
+
         }
+    }
+
+    /// <summary>
+    /// Uccide il personaggio togliendo tutta la vita.
+    /// </summary>
+    public void Kill() {
+        Damage(Life);
     }
 
 }
