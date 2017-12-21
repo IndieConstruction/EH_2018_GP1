@@ -9,8 +9,20 @@ public class Agent : MonoBehaviour {
     /// </summary>
     public string Name;
     public int Life;
-    public bool IsAlive;
+    public bool IsAlive = true;
+    /// <summary>
+    /// Velocità di movimento (maggiore è il valore, maggiore sarà la velocità di spostamento)
+    /// </summary>
     public float MovementSpeed;
+    /// <summary>
+    /// Forza con coi avviene la spinta verso l'alto.
+    /// </summary>
+    public float JumpForce = 10;
+    /// <summary>
+    /// Identifica se il personaggio sta attualmenmte saltando (se true sta saltando).
+    /// </summary>
+    public bool IsJumping = false;
+    public Rigidbody rigidbody = null;
 
     /// <summary>
     /// Toglie una unità di salute a questo oggetto.
