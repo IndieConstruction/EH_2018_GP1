@@ -41,25 +41,22 @@ public class Agent : MonoBehaviour {
     /// <summary>
     /// Toglie una unità di salute a questo oggetto.
     /// </summary>
-    public void Damage(int damageAmount)
-    {
+    public virtual void Damage(int damageAmount) {
         Debug.Log("Ho subito un danno " + Name);
         Life = Life - damageAmount;
-        
-        if (Life <= 0)
-        {
+
+        if (Life <= 0) {
             IsAlive = false;
             if (gameObject.GetComponent<MeshRenderer>() != null) {
                 gameObject.GetComponent<MeshRenderer>().enabled = false;
             }
-
         }
     }
 
     /// <summary>
     /// Uccide il personaggio togliendo tutta la vita.
     /// </summary>
-    public void Kill() {
+    public virtual void Kill() {
         Damage(Life);
     }
 

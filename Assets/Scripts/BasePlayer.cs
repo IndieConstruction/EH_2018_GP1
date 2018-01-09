@@ -36,8 +36,7 @@ public class BasePlayer : Agent {
             }
             // Salto P1
             if (Input.GetKeyDown(KeyCode.W) == true && IsJumping == false) {
-                rigidbody.AddForce(new Vector3(0, JumpForce, 0));
-                IsJumping = true;
+                jump();
             }
 
 
@@ -63,15 +62,29 @@ public class BasePlayer : Agent {
         }
     }
 
+    protected void jump() {
+        rigidbody.AddForce(new Vector3(0, JumpForce, 0));
+        IsJumping = true;
+    }
+
     /// <summary>
     /// Viene chiamata quando l'oggetto entra in collisione con un altro oggetto.
     /// </summary>
     /// <param name="collision"></param>
     private void OnCollisionEnter(Collision collision) {
         IsJumping = false;
-
-        if (collision.gameObject.tag == "Respawn") {
-            Kill();
+        switch (collision.gameObject.tag) {
+            case "Respawn":
+                Kill();
+                break;
+            case "Enemy":
+                if (collision.collider.GetType() == typeof(SphereCollider)) {
+                    collision.gameObject.GetComponentInParent<Enemy>().Kill();
+                    jump();
+                }
+                ; break;
+            default:
+                break;
         }
     }
 
