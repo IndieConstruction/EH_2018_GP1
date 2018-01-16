@@ -21,7 +21,6 @@ public class BasePlayer : Agent {
         PlayerCount = PlayerCount + 1;
         myTransform = gameObject.GetComponent<Transform>();
         Debug.Log("Player count: " + PlayerCount);
-
     }
 
     private void Update() {
