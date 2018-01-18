@@ -5,13 +5,18 @@ using UnityEngine;
 public class BasePlayer : Agent {
 
     private static int PlayerCount = 0;
-
+    public GameObject hand;
+    public bool isFlower;
+    public bool right;
     private Transform myTransform = null;
 
     float Timer = 0f;
 
 
     private void Start() {
+        isFlower = false;
+        right = true;
+        hand.SetActive(false);
         rigidbody = gameObject.GetComponent<Rigidbody>();
         if (rigidbody == null) {
             rigidbody = gameObject.AddComponent<Rigidbody>();
@@ -27,10 +32,18 @@ public class BasePlayer : Agent {
         if (Name == "Mario") {
             // Movimento sinistra P1
             if (Input.GetKey(KeyCode.A)) {
+                if (right) {
+                    myTransform.Rotate(0,180,0);
+                }
+                right = false;
                 myTransform.position = myTransform.position + new Vector3(-MovementSpeed, 0, 0);
             }
             // Movimento destra P1
             if (Input.GetKey(KeyCode.D)) {
+                if (!right) {
+                    myTransform.Rotate(0,180,0);
+                }
+                right = true;
                 myTransform.position = myTransform.position + new Vector3(MovementSpeed, 0, 0);
             }
             // Salto P1
@@ -61,6 +74,10 @@ public class BasePlayer : Agent {
         }
     }
 
+    public void ActiveFlower() {
+        isFlower = true;
+        hand.SetActive(true);
+    }
     protected void jump() {
         rigidbody.AddForce(new Vector3(0, JumpForce, 0));
         IsJumping = true;
