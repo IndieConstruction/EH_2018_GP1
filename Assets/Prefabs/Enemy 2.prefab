@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 114264647709770780}
   - component: {fileID: 65922005424602066}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy 2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53,7 +53,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1855682410929602}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -14.17, y: 3.2900004, z: 0}
+  m_LocalPosition: {x: 26, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4481674878924440}
@@ -138,14 +138,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Enemy
-  Life: 1
+  Life: 5
   IsAlive: 1
-  MovementSpeed: 0
+  MovementSpeed: 3
   JumpForce: 10
   IsJumping: 0
   RespawnDelay: 1
   rigidbody: {fileID: 0}
   ArrivePoint: {x: 28, y: 3, z: 0}
+  isHorizontal: 0
+  Data: {fileID: 0}
 --- !u!135 &135646756731530674
 SphereCollider:
   m_ObjectHideFlags: 1

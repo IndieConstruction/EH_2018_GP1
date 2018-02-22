@@ -1,8 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+// using UnityEditor;
 using UnityEngine;
 
 public class Enemy : Agent {
+
+    public int UniqueID = -1;
 
     public Vector3 ArrivePoint;
     private Vector3 destination;
@@ -11,15 +14,50 @@ public class Enemy : Agent {
 
     public bool isHorizontal;
 
+    public EnemyData Data;
+
     private void Start() {
         transform.position = respawnPosition;
         // Variabili di movimento
         goToRight = true;
         destination = ArrivePoint;
+        Setup();
     }
+
+    EnemyData instanceData;
+
+    void Setup() {
+        if (!Data)
+            return;
+        instanceData = GameObject.Instantiate<EnemyData>(Data);
+        instanceData.Life = 1000;
+        Life = instanceData.Life;
+        MovementSpeed = instanceData.MovementSpeed;
+        UniqueID = instanceData.UniqueId;
+    }
+
+    // SOLO IN EDITOR
+
+    //void SaveNewEnemyData() {
+
+    //    instanceData.Level = instanceData.Level + 1;
+    //    instanceData.Life = Life;
+    //    instanceData.MovementSpeed = MovementSpeed;
+    //    AssetDatabase.CreateAsset(instanceData, string.Format("Assets/Scripts/Data/Enemies/EnemyLevel{0}.asset", instanceData.Level) );
+    //    AssetDatabase.SaveAssets();
+
+
+
+    //}
+
     private void Update() {
         Movement();
-
+        //if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        //    Life++;
+        //    if (Life > 1010) {
+        //        SaveNewEnemyData();
+        //    }
+        //}
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -44,10 +82,10 @@ public class Enemy : Agent {
             }
             if (goToRight == true) {
                 // vado a dx
-                transform.Translate(Vector3.right * Time.deltaTime);
+                transform.Translate(Vector3.right * Time.deltaTime * MovementSpeed);
             } else {
                 // varo a sx
-                transform.Translate(Vector3.left * Time.deltaTime);
+                transform.Translate(Vector3.left * Time.deltaTime * MovementSpeed);
             }
         }
         if (isHorizontal == false) {
