@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,6 +13,19 @@ public class BasePlayer : Agent {
 
     float Timer = 0f;
 
+    private void OnEnable() {
+        EventManager.OnPlayStart += onPlayStart;
+    }
+
+
+    private void onPlayStart() {
+        // .... 
+        Debug.Log("Player pronto");
+    }
+
+    private void OnDisable() {
+        EventManager.OnPlayStart -= onPlayStart;
+    }
 
     private void Start() {
         isFlower = false;
@@ -26,6 +40,7 @@ public class BasePlayer : Agent {
         PlayerCount = PlayerCount + 1;
         myTransform = gameObject.GetComponent<Transform>();
         Debug.Log("Player count: " + PlayerCount);
+        
     }
 
     private void Update() {

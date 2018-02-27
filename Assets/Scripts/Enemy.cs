@@ -17,12 +17,28 @@ public class Enemy : Agent {
     public EnemyData Data;
 
     private void Start() {
+
+    }
+
+    private void OnEnable() {
+        EventManager.OnPlayStart += onPlayStart;
+    }
+
+
+    private void onPlayStart() {
         transform.position = respawnPosition;
         // Variabili di movimento
         goToRight = true;
         destination = ArrivePoint;
         Setup();
+
+        Debug.Log("Enemy pronto");
     }
+
+    private void OnDisable() {
+        EventManager.OnPlayStart -= onPlayStart;
+    }
+
 
     EnemyData instanceData;
 
